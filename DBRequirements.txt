@@ -1,0 +1,51 @@
+1️⃣ Clientes
+
+Tabla: clientes
+id → INT, PK, autoincremental
+nombre → VARCHAR(100)
+telefono → VARCHAR(20)
+correo → VARCHAR(100) (opcional)
+direccion → TEXT (opcional, útil para facturación)
+fecha_registro → DATE (alta en el sistema)
+
+2️⃣ Vehículos
+
+Tabla: vehiculos
+id → INT, PK
+cliente_id → FK a clientes.id
+marca → VARCHAR(50)
+modelo → VARCHAR(50)
+anio → INT
+placas → VARCHAR(20)
+vin → VARCHAR(50) (opcional, número de serie del auto)
+color → VARCHAR(30) (opcional)
+
+3️⃣ Órdenes de trabajo / Servicios
+
+Tabla: ordenes
+id → INT, PK
+vehiculo_id → FK a vehiculos.id
+fecha_ingreso → DATETIME
+fecha_salida → DATETIME (puede ser NULL si sigue en el taller)
+estado → VARCHAR(20) (Ej: “Pendiente”, “En proceso”, “Completado”, “Entregado”)
+descripcion → TEXT (explicación del problema)
+costo_total → DECIMAL(10,2)
+
+Tabla: detalle_servicios (para registrar cada cosa hecha en una orden)
+id → INT, PK
+orden_id → FK a ordenes.id
+servicio → VARCHAR(100) (ej: cambio de aceite, alineación)
+costo → DECIMAL(10,2)
+refaccion_id → FK a inventario.id (opcional, si se usó refacción)
+cantidad → INT
+
+4️⃣ Inventario (Refacciones/Consumibles)
+
+Tabla: inventario
+id → INT, PK
+nombre → VARCHAR(100) (ej: Aceite 10W40, Pastillas de freno)
+descripcion → TEXT
+cantidad → INT
+precio_unitario → DECIMAL(10,2)
+proveedor → VARCHAR(100) (opcional)
+ultima_actualizacion → DATETIME
